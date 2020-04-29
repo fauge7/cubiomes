@@ -293,7 +293,7 @@ static DWORD WINAPI searchCompactBiomesThread(LPVOID data)
 			printf("%s", info_out);
 			fflush(stdout);
 		}
-
+/*
 		FILE *fp = fopen("found.csv", "r");
 		if (fp == NULL)
 		{
@@ -310,6 +310,7 @@ static DWORD WINAPI searchCompactBiomesThread(LPVOID data)
 			fclose(fp);
 			fp = fopen("found.csv", "a");
 		}
+		
 		//fprintf(fp, "%" PRId64, s);
 		//fprintf(fp, ",%i:%i & %i:%i", goodhuts[0].x, goodhuts[0].z, goodhuts[1].x, goodhuts[1].z);
 		//fprintf(fp, ",%.2f%%", ocean_percent);
@@ -324,9 +325,10 @@ static DWORD WINAPI searchCompactBiomesThread(LPVOID data)
 		//	fprintf(fp, ",%.2f%%", (major_biome_counter[i] * (step * step) / (fw * fh)) * 100);
 		fprintf(fp, "%s", out);
 		fclose(fp);
-
+*/
 		if (info.genimage == 'y')
 		{
+			printf("Saving file \n");
 			unsigned char biomeColours[256][3];
 
 			// Initialize a colour map for biomes.
@@ -351,8 +353,8 @@ static DWORD WINAPI searchCompactBiomesThread(LPVOID data)
 			// Map the biomes to a color buffer and save to an image.
 			biomesToImage(rgb, biomeColours, biomes, areaWidth, areaHeight, scale, 2);
 			char filename[20];
-			snprintf(filename, 20, "%" PRId64 ".ppm", s);
-			savePPM(filename, rgb, imgWidth, imgHeight);
+			snprintf(filename, 20, "%" PRId64 ".svg", s);
+			saveSVG(filename, rgb, imgWidth, imgHeight);
 
 			// Clean up.
 			free(biomes);
@@ -461,7 +463,7 @@ int main(int argc, char *argv[])
 
 	if (!raw)
 	{
-		printf("Build: 37\n");
+		printf("Build: 38\n");
 		printf("Starting search through seeds %" PRId64 " to %" PRId64 ", using %u threads.\n"
 			   "Search radius = %u.\n",
 			   seedStart, seedEnd, threads, range);
